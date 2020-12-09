@@ -38,20 +38,63 @@ jobs:
      runs-on: ubuntu-latest
      environment:
        name: dev
-       url: 'https://DEV-julioarruda.com'
+       url: ${{ steps.app-web.outputs.webapp-url }}
      needs: build
      steps:
        - uses: actions/download-artifact@v2
          with:
            name: artifact
            path: ${{ github.workspace }}//demo
-       
-       - run: ls
- 
+        
        - name: 'Run Azure webapp deploy action using publish profile credentials'
          uses: azure/webapps-deploy@v2
+         id: app-web
          with: 
            app-name: ${{ secrets.AZURE_WEBAPP_NAME }} 
            publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_DEV }} 
            package: '${{ github.workspace }}//demo'
            slot-name: 'dev'
+     
+
+  deploy-qa:
+     runs-on: ubuntu-latest
+     environment:
+       name: qa
+       url: ${{ steps.app-web.outputs.webapp-url }}
+     needs: build
+     steps:
+       - uses: actions/download-artifact@v2
+         with:
+           name: artifact
+           path: ${{ github.workspace }}//demo
+        
+       - name: 'Run Azure webapp deploy action using publish profile credentials'
+         uses: azure/webapps-deploy@v2
+         id: app-web
+         with: 
+           app-name: ${{ secrets.AZURE_WEBAPP_NAME }} 
+           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_QA }} 
+           package: '${{ github.workspace }}//demo'
+           slot-name: 'qa'
+  
+  deploy-prd:
+     runs-on: ubuntu-latest
+     environment:
+       name: prd
+       url: ${{ steps.app-web.outputs.webapp-url }}
+     needs: deploy-qa
+     steps:
+       - uses: actions/download-artifact@v2
+         with:
+           name: artifact
+           path: ${{ github.workspace }}//demo
+        
+       - name: 'Run Azure webapp deploy action using publish profile credentials'
+         uses: azure/webapps-deploy@v2
+         id: app-web
+         with: 
+           app-name: ${{ secrets.AZURE_WEBAPP_NAME }} 
+           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_PRD }} 
+           package: '${{ github.workspace }}//demo'
+           
+     

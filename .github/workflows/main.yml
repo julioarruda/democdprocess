@@ -33,3 +33,14 @@ jobs:
       with:
         name: artifact
         path: ${{ github.workspace }}//demo
+      
+  deploy-dev:
+     runs-on: ubuntu-latest
+     environment:
+       name: dev
+       url: 'https://DEV-julioarruda.com'
+     needs: build
+     steps:
+       - uses: actions/download-artifact@v2
+         with:
+           name: artifact

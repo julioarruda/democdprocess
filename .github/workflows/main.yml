@@ -77,10 +77,10 @@ jobs:
            package: '${{ github.workspace }}//demo'
            slot-name: 'qa'
   
-  deploy-prd:
+  deploy-prd2:
      runs-on: ubuntu-latest
      environment:
-       name: prd
+       name: prd2
        url: ${{ steps.app-web.outputs.webapp-url }}
      needs: deploy-qa
      steps:

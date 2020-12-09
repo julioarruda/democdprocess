@@ -77,13 +77,13 @@ jobs:
            package: '${{ github.workspace }}//demo'
            slot-name: 'qa'
   
-  deploy-prd2:
-     runs-on: ubuntu-latest
-     environment:
-       name: prd2
-       url: ${{ steps.app-web.outputs.webapp-url }}
-     needs: deploy-qa
-     steps:
+  deploy-prd:
+    runs-on: ubuntu-latest
+    environment:
+      name: prd
+      url: ${{ steps.app-web.outputs.webapp-url }}
+    needs: deploy-qa
+    steps:
        - uses: actions/download-artifact@v2
          with:
            name: artifact

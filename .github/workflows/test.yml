@@ -36,7 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: dev
-      url: 'https://julioarruda.com'
+      url: ${{ steps.app-web.outputs.webapp-url }}
     needs: build
     steps:
        - uses: actions/download-artifact@v2
@@ -57,7 +57,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: qa
-      url: 'https://julioarruda.com'
+      url: ${{ steps.app-web.outputs.webapp-url }}
     needs: build
     steps:
        - uses: actions/download-artifact@v2
@@ -79,7 +79,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: prd
-      url: 'https://julioarruda.com'
+      url: ${{ steps.app-web.outputs.webapp-url }}
     needs: deploy-qa
     steps:
        - uses: actions/download-artifact@v2

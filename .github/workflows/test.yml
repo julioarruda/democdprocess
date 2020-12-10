@@ -1,0 +1,42 @@
+name: temp
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run a one-line script
+        run: echo Hello, world!
+
+  deploy-dev:
+    runs-on: ubuntu-latest
+    environment:
+      name: dev
+      url: 'https://julioarruda.com'
+    needs: build
+    steps:
+      - name: Run a one-line script
+        run: echo Hello, world!
+
+  deploy-qa:
+    runs-on: ubuntu-latest
+    environment:
+      name: qa
+      url: 'https://julioarruda.com'
+    needs: build
+    steps:
+      - name: Run a one-line script
+        run: echo Hello, world!
+  
+  
+  deploy-prd:
+    runs-on: ubuntu-latest
+    environment:
+      name: prd
+      url: 'https://julioarruda.com'
+    needs: deploy-qa
+    steps:
+      - name: Run a one-line script
+        run: echo Hello, world!

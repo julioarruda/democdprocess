@@ -37,8 +37,7 @@ jobs:
   deploy-dev:
      runs-on: ubuntu-latest
      environment:
-       name: dev
-       url: ${{ steps.app-web.outputs.webapp-url }}
+       name: dev       
      needs: build
      steps:
        - uses: actions/download-artifact@v2
@@ -59,8 +58,7 @@ jobs:
   deploy-qa:
      runs-on: ubuntu-latest
      environment:
-       name: qa
-       url: ${{ steps.app-web.outputs.webapp-url }}
+       name: qa       
      needs: build
      steps:
        - uses: actions/download-artifact@v2
@@ -80,8 +78,7 @@ jobs:
   deploy-prd:
      runs-on: ubuntu-latest
      environment:
-       name: prd
-       url: ${{ steps.app-web.outputs.webapp-url }}
+       name: prd       
      needs: deploy-qa
      steps:
        - uses: actions/download-artifact@v2

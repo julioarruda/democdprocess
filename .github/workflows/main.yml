@@ -81,7 +81,7 @@ jobs:
      runs-on: ubuntu-latest
      environment:
        name: prd       
-       url: 'https://democdactions-dev.azurewebsites.net'
+       url: 'https://democdactions.azurewebsites.net'
      needs: deploy-qa
      steps:
        - uses: actions/download-artifact@v2

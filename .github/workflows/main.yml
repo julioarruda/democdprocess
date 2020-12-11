@@ -37,7 +37,8 @@ jobs:
   deploy-dev:
      runs-on: ubuntu-latest
      environment:
-       name: dev       
+       name: dev 
+       url: 'https://democdactions-dev.azurewebsites.net'
      needs: build
      steps:
        - uses: actions/download-artifact@v2
@@ -58,7 +59,8 @@ jobs:
   deploy-qa:
      runs-on: ubuntu-latest
      environment:
-       name: qa       
+       name: qa      
+       url: 'https://democdactions-qa.azurewebsites.net' 
      needs: build
      steps:
        - uses: actions/download-artifact@v2
@@ -79,6 +81,7 @@ jobs:
      runs-on: ubuntu-latest
      environment:
        name: prd       
+       url: 'https://democdactions-dev.azurewebsites.net'
      needs: deploy-qa
      steps:
        - uses: actions/download-artifact@v2

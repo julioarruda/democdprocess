@@ -64,7 +64,7 @@ jobs:
       NOME_WEBAPP_AZURE: democdactions     
      environment:
        name: qa      
-       url: 'https://democdactions-qa.azurewebsites.net' 
+       url: ${{ steps.app-web.outputs.webapp-url }}
      needs: build
      steps:
        - uses: actions/download-artifact@v2
@@ -87,7 +87,7 @@ jobs:
       NOME_WEBAPP_AZURE: democdactions     
      environment:
        name: prd       
-       url: 'https://democdactions.azurewebsites.net'
+       url: ${{ steps.app-web.outputs.webapp-url }}
      needs: deploy-qa
      steps:
        - uses: actions/download-artifact@v2

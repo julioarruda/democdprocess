@@ -36,9 +36,11 @@ jobs:
       
   deploy-dev:
      runs-on: ubuntu-latest
+     env:
+      NOME_WEBAPP_AZURE: democdactions
      environment:
        name: dev 
-       url: 'https://democdactions-dev.azurewebsites.net'
+       url: ${{ steps.app-web.outputs.webapp-url }}
      needs: build
      steps:
        - uses: actions/download-artifact@v2
@@ -50,7 +52,7 @@ jobs:
          uses: azure/webapps-deploy@v2
          id: app-web
          with: 
-           app-name: ${{ secrets.AZURE_WEBAPP_NAME }} 
+           app-name: ${{ env.AZURE_WEBAPP_NAME }} 
            publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_DEV }} 
            package: '${{ github.workspace }}//demo'
            slot-name: 'dev'
@@ -58,6 +60,8 @@ jobs:
 
   deploy-qa:
      runs-on: ubuntu-latest
+     env:
+      NOME_WEBAPP_AZURE: democdactions     
      environment:
        name: qa      
        url: 'https://democdactions-qa.azurewebsites.net' 
@@ -72,13 +76,15 @@ jobs:
          uses: azure/webapps-deploy@v2
          id: app-web
          with: 
-           app-name: ${{ secrets.AZURE_WEBAPP_NAME }} 
+           app-name: ${{ env.AZURE_WEBAPP_NAME }} 
            publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_QA }} 
            package: '${{ github.workspace }}//demo'
            slot-name: 'qa'
 
   deploy-prd:
      runs-on: ubuntu-latest
+     env:
+      NOME_WEBAPP_AZURE: democdactions     
      environment:
        name: prd       
        url: 'https://democdactions.azurewebsites.net'
@@ -93,7 +99,7 @@ jobs:
          uses: azure/webapps-deploy@v2
          id: app-web
          with: 
-           app-name: ${{ secrets.AZURE_WEBAPP_NAME }} 
+           app-name: ${{ env.AZURE_WEBAPP_NAME }} 
            publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_PRD }} 
            package: '${{ github.workspace }}//demo'
            

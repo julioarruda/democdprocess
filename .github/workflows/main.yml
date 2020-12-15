@@ -86,6 +86,7 @@ jobs:
            slot-name: 'qa'
 
   deploy-prd:
+     name: Deploy PRD
      runs-on: ubuntu-latest
      env:
       NOME_WEBAPP_AZURE: democdactions     

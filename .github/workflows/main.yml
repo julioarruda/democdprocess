@@ -35,6 +35,8 @@ jobs:
         path: ${{ github.workspace }}//demo
       
   deploy-dev:
+     name: Deploy Dev
+     if: github.event_name == 'pull_request'
      runs-on: ubuntu-latest
      env:
       NOME_WEBAPP_AZURE: democdactions
@@ -59,13 +61,15 @@ jobs:
      
 
   deploy-qa:
+     name: Deploy QA
+     if: github.event.ref == 'refs/heads/main'
      runs-on: ubuntu-latest
      env:
       NOME_WEBAPP_AZURE: democdactions     
      environment:
        name: qa      
        url: ${{ steps.app-web.outputs.webapp-url }}
-     needs: deploy-dev
+     needs: build
      steps:
        - uses: actions/download-artifact@v2
          with:

@@ -53,7 +53,7 @@ jobs:
          id: app-web
          with: 
            app-name: ${{ env.AZURE_WEBAPP_NAME }} 
-           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_DEV }} 
+           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }} 
            package: '${{ github.workspace }}//demo'
            slot-name: 'dev'
      
@@ -65,7 +65,7 @@ jobs:
      environment:
        name: qa      
        url: ${{ steps.app-web.outputs.webapp-url }}
-     needs: build
+     needs: deploy-dev
      steps:
        - uses: actions/download-artifact@v2
          with:
@@ -77,7 +77,7 @@ jobs:
          id: app-web
          with: 
            app-name: ${{ env.AZURE_WEBAPP_NAME }} 
-           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_QA }} 
+           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }} 
            package: '${{ github.workspace }}//demo'
            slot-name: 'qa'
 
@@ -100,6 +100,6 @@ jobs:
          id: app-web
          with: 
            app-name: ${{ env.AZURE_WEBAPP_NAME }} 
-           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_PRD }} 
+           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }} 
            package: '${{ github.workspace }}//demo'
            
